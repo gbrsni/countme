@@ -82,10 +82,22 @@ for os in all_oss:
 sorted_oss =[x.capitalize() for x in top_hits.sort_values(by='hits', ascending=False).index.tolist()]
 
 for fig, oss in [
-    ("ublue", [x for x in sorted_oss if x in ["Bluefin", "Bazzite", "Aurora"]]),
-    ("nonbazzite", [x for x in sorted_oss if x in ["Bluefin", "Aurora"]]),
-    ("bazzite", ["Bazzite"]),
-    ("global", [x for x in sorted_oss if x in ["Silverblue", "Kinoite", "Bluefin", "Bazzite", "Aurora"]]),
+    (
+        "ublue",
+        [x for x in sorted_oss if x in ["Bluefin", "Bazzite", "Aurora"]]
+    ),
+    (
+        "nonbazzite",
+        [x for x in sorted_oss if x in ["Bluefin", "Aurora"]]
+    ),
+    (
+        "bazzite",
+        ["Bazzite"]
+    ),
+    (
+        "global",
+        [x for x in sorted_oss if x in ["Silverblue", "Kinoite", "Bluefin", "Bazzite", "Aurora"]]
+    ),
 ]:
     
     plt.figure(figsize=(16, 9))
