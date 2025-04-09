@@ -73,6 +73,7 @@ END_DATE = datetime.datetime.now()
 def number_format(x, pos):
     return f"{int(x / 1000)}k"
 
+# Sort OS names by latest hits value
 all_oss = [x.lower() for x in ["Silverblue", "Kinoite", "Bluefin", "Bazzite", "Aurora"]]
 
 top_hits = pd.DataFrame(columns = ['hits'])
