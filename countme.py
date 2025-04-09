@@ -73,12 +73,14 @@ END_DATE = datetime.datetime.now()
 def number_format(x, pos):
     return f"{int(x / 1000)}k"
 
-# Sort OS names by latest hits value
+# Sort OS variants by latest hits value
 all_oss = [x.lower() for x in ["Silverblue", "Kinoite", "Bluefin", "Bazzite", "Aurora"]]
 
 top_hits = pd.DataFrame(columns = ['hits'])
 for os in all_oss:
-    top_hits.loc[os] = pd.DataFrame(d.groupby(["week_end", "os_variant"], observed=True)["hits"].sum()).query("week_end == week_end.max() and os_variant.str.lower().str.contains(@os)").sum()["hits"]
+    grouped_hits = pd.DataFrame(d.groupby(["week_end", "os_variant"], observed=True)["hits"].sum())
+    variants_hits = grouped_hits.query("week_end == week_end.max() and os_variant.str.lower().str.contains(@os)")
+    top_hits.loc[os] = variants_hits.sum()["hits"]
 
 sorted_oss = [x.capitalize() for x in top_hits.sort_values(by='hits', ascending=False).index.tolist()]
 
