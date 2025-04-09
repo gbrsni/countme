@@ -80,7 +80,7 @@ top_hits = pd.DataFrame(columns = ['hits'])
 for os in all_oss:
     top_hits.loc[os] = pd.DataFrame(d.groupby(["week_end", "os_variant"], observed=True)["hits"].sum()).query("week_end == week_end.max() and os_variant.str.lower().str.contains(@os)").sum()["hits"]
 
-sorted_oss =[x.capitalize() for x in top_hits.sort_values(by='hits', ascending=False).index.tolist()]
+sorted_oss = [x.capitalize() for x in top_hits.sort_values(by='hits', ascending=False).index.tolist()]
 
 for fig, oss in [
     (
