@@ -92,10 +92,13 @@ fedora_repos_hits = orig[
 global_os = [
     "Silverblue",
     "Kinoite",
+    "uCore"
+]
+
+universal_blue = [
     "Bluefin",
     "Bazzite",
     "Aurora",
-    "uCore"
 ]
 
 upstream_os = [
@@ -112,11 +115,21 @@ complete_os = upstream_os + global_os
 
 # Dataframe with one row per week in time range, one column per OS
 os_hits = pd.DataFrame()
+# Fedora Linux
 for os in complete_os:
-    mask = fedora_repos_hits["os_variant"].str.lower().str.contains(os.lower(), na=False)
+    mask = (fedora_repos_hits['os_name'] == 'Fedora Linux') & (fedora_repos_hits["os_variant"].str.lower().str.contains(os.lower(), na=False))
     res = fedora_repos_hits[mask].groupby("week_end")["hits"].sum()
 
     os_hits[os] = res
+
+# Universal Blue
+for os in universal_blue:
+    mask = fedora_repos_hits['os_name'] == os
+    res = fedora_repos_hits[mask].groupby("week_end")["hits"].sum()
+
+    os_hits[os] = res
+
+global_os = global_os + universal_blue
 
 # LTS variants use os_name and are thus done separately and on data for all repos
 # They also used different names in the begining so those values need to be counted too
